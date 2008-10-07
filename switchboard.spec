@@ -17,6 +17,7 @@ BuildRequires:	boost-ref-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_fcgi_path	/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin
+%define		_libdir		%{_prefix}/lib
 
 %description
 switchboard is a FastCGI proxy that starts setuid FastCGI processes on
