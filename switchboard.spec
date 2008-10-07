@@ -1,14 +1,11 @@
 Summary:	FastCGI proxy that starts setuid FastCGI processes on demand
 Name:		switchboard
-Version:	2.0.16
+Version:	2.0.17
 Release:	0.1
 License:	BSD
 Group:		Applications
-Source0:	https://confluence.toolserver.org/download/attachments/5931011/%{name}-%{version}.tar.gz?version=1
-# Source0-md5:	4cb514bc04c6913d309cbb330362574d
-Patch0:		%{name}-overquote.patch
-Patch1:		%{name}-boost.patch
-Patch2:		%{name}-make.patch
+Source0:	http://www.flyingparchment.org.uk/dump/%{name}-%{version}.tar.gz
+# Source0-md5:	6f32beb6b6942c67a187f8f19155731e
 URL:		https://confluence.toolserver.org/display/switchboard/Home
 BuildRequires:	boost-call_traits-devel
 BuildRequires:	boost-devel
@@ -29,9 +26,6 @@ overhead of other solutions like mod_suphp.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 # not autoconf configure
