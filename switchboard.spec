@@ -8,7 +8,13 @@ Source0:	https://confluence.toolserver.org/download/attachments/5931011/%{name}-
 # Source0-md5:	4cb514bc04c6913d309cbb330362574d
 Patch0:		%{name}-overquote.patch
 URL:		https://confluence.toolserver.org/display/switchboard/Home
+BuildRequires:	boost-call_traits-devel
+BuildRequires:	boost-devel
+BuildRequires:	boost-mem_fn-devel
+BuildRequires:	boost-ref-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_fcgi_path	/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin
 
 %description
 switchboard is a FastCGI proxy that starts setuid FastCGI processes on
@@ -36,8 +42,7 @@ CXXFLAGS="%{rpmcxxflags}" \
 	--uid-min=50 \
 	--gid-min=50 \
 	--user=http \
-	--group=http
-	--safe-path="/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin" \
+	--group=http \
 %ifarch %{x8664}
 	--atomic=amd64_gcc \
 %endif
@@ -47,6 +52,7 @@ CXXFLAGS="%{rpmcxxflags}" \
 %ifnarch %{ix86} %{x8664}
 	--atomic=pthread \
 %endif
+	--safe-path="%{_fcgi_path}"
 %{__make}
 
 %install
