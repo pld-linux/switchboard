@@ -44,15 +44,6 @@ CXXFLAGS="%{rpmcxxflags}" \
 	--gid-min=50 \
 	--user=http \
 	--group=http \
-%ifarch %{x8664}
-	--atomic=amd64_gcc \
-%endif
-%ifarch %{ix86}
-	--atomic=i386_gcc \
-%endif
-%ifnarch %{ix86} %{x8664}
-	--atomic=pthread \
-%endif
 	--safe-path="%{_fcgi_path}"
 %{__make}
 
