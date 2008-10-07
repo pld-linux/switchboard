@@ -7,10 +7,13 @@ Group:		Applications
 Source0:	http://www.flyingparchment.org.uk/dump/%{name}-%{version}.tar.gz
 # Source0-md5:	6f32beb6b6942c67a187f8f19155731e
 URL:		https://confluence.toolserver.org/display/switchboard/Home
-BuildRequires:	boost-call_traits-devel
 BuildRequires:	boost-devel
+BuildRequires:	rpm >= 4.4.9-56
+%if "%{pld_release}" == "ac"
+BuildRequires:	boost-call_traits-devel
 BuildRequires:	boost-mem_fn-devel
 BuildRequires:	boost-ref-devel
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_fcgi_path	/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin
@@ -61,7 +64,7 @@ install -d $RPM_BUILD_ROOT
 	MANDIR=%{_mandir} \
 	BINDIR=%{_sbindir} \
 	ROOTUSER=%(id -un) \
-	ROOTGROUP=%(id -un) \
+	ROOTGROUP=%(id -gn) \
 	SB_GROUP=%(id -gn) \
 	DESTDIR=$RPM_BUILD_ROOT
 
