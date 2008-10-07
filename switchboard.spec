@@ -22,6 +22,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_fcgi_path	/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin
 %define		_libdir		%{_prefix}/lib
+%define		_sysconfdir	/etc/%{name}
 
 %description
 switchboard is a FastCGI proxy that starts setuid FastCGI processes on
@@ -72,6 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README
+%dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/switchboard.conf
 %attr(755,root,root) %{_sbindir}/switchboard
 %attr(755,root,root) %{_sbindir}/switchstats
