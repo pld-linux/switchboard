@@ -12,6 +12,7 @@ Source0:	http://www.flyingparchment.org.uk/dump/%{name}-%{version}.tar.gz
 # Source0-md5:	6f32beb6b6942c67a187f8f19155731e
 URL:		https://confluence.toolserver.org/display/switchboard/Home
 BuildRequires:	boost-devel
+BuildRequires:	pam-devel
 BuildRequires:	rpm >= 4.4.9-56
 %if "%{pld_release}" == "ac"
 BuildRequires:	boost-call_traits-devel
