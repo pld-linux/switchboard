@@ -1,0 +1,114 @@
+--- switchboard-2.0.16/configure~	2008-09-05 03:12:07.000000000 +0300
++++ switchboard-2.0.16/configure	2008-10-07 14:38:02.845861200 +0300
+@@ -177,8 +177,8 @@
+ 	rm -f conftest.c
+ 	echo "$@" >conftest.c
+ 	retval=1
+-	echo "$CC" $CPPFLAGS $CFLAGS conftest.c -o conftest >>config.log
+-	if "$CC" $CPPFLAGS $CFLAGS conftest.c -o conftest >>config.log 2>&1; then
++	echo $CC $CPPFLAGS $CFLAGS conftest.c -o conftest >>config.log
++	if $CC $CPPFLAGS $CFLAGS conftest.c -o conftest >>config.log 2>&1; then
+ 		retval=0
+ 	fi
+ 	rm -f conftest.c conftest
+@@ -189,8 +189,8 @@
+ 	rm -f conftest.cc
+ 	echo "$@" >conftest.cc
+ 	retval=1
+-	echo "$CXX" $CPPFLAGS $CXXFLAGS conftest.cc -o conftest >>config.log
+-	if "$CXX" $CPPFLAGS $CXXFLAGS conftest.cc -o conftest >>config.log 2>&1; then
++	echo $CXX $CPPFLAGS $CXXFLAGS conftest.cc -o conftest >>config.log
++	if $CXX $CPPFLAGS $CXXFLAGS conftest.cc -o conftest >>config.log 2>&1; then
+ 		retval=0
+ 	fi
+ 	rm -f conftest.cc conftest
+@@ -218,13 +218,13 @@
+ 	printf "#include <$2>\nint main() { return 0; }" >$file
+ 	retval=0
+ 	if [ $1 = cxx ]; then
+-		echo "$CXX" $CPPFLAGS $CXXFLAGS $file -o conftest >>config.log 
+-		if ! "$CXX" $CPPFLAGS $CXXFLAGS $file -o conftest >>config.log 2>&1; then
++		echo $CXX $CPPFLAGS $CXXFLAGS $file -o conftest >>config.log 
++		if ! $CXX $CPPFLAGS $CXXFLAGS $file -o conftest >>config.log 2>&1; then
+ 			retval=1
+ 		fi
+ 	else
+-		echo "$CC" $CPPFLAGS $CFLAGS $file -o conftest >>config.log
+-		if ! "$CC" $CPPFLAGS $CFLAGS $file -o conftest >>config.log 2>&1; then
++		echo $CC $CPPFLAGS $CFLAGS $file -o conftest >>config.log
++		if ! $CC $CPPFLAGS $CFLAGS $file -o conftest >>config.log 2>&1; then
+ 			retval=1
+ 		fi
+ 	fi
+@@ -240,8 +240,8 @@
+ 	fi
+ 	printf "void $func(void); int main() { $func(); return 0; }\n" >conftest.c
+ 	retval=0
+-	echo "$CC" $CPPFLAGS $CFLAGS $args conftest.c -o conftest >>config.log
+-	if ! "$CC" $CPPFLAGS $CFLAGS $args conftest.c -o conftest >>config.log 2>&1; then
++	echo $CC $CPPFLAGS $CFLAGS $args conftest.c -o conftest >>config.log
++	if ! $CC $CPPFLAGS $CFLAGS $args conftest.c -o conftest >>config.log 2>&1; then
+ 		retval=1
+ 	fi
+ 	return $retval
+@@ -251,8 +251,8 @@
+ 	lib=$1; shift
+ 	printf "int main() { return 0; }\n" >conftest.c
+ 	retval=0
+-	echo "$CC" $CPPFLAGS $CFLAGS $LDFLAGS -l$lib "$@" conftest.c -o conftest >>config.log 
+-	if ! "$CC" $CPPFLAGS $CFLAGS $LDFLAGS -l$lib "$@" conftest.c -o conftest >>config.log 2>&1; then
++	echo $CC $CPPFLAGS $CFLAGS $LDFLAGS -l$lib "$@" conftest.c -o conftest >>config.log 
++	if ! $CC $CPPFLAGS $CFLAGS $LDFLAGS -l$lib "$@" conftest.c -o conftest >>config.log 2>&1; then
+ 		retval=1
+ 	fi
+ 	return $retval
+@@ -322,24 +322,24 @@
+ __EOF__
+ 	# try gcc4 builtins
+ 	ATOMIC_SRC="atomic_gcc4.c"
+-	echo "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_gcc4.c -o conftest >>config.log
+-	if ! "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_gcc4.c -o conftest >>config.log 2>&1; then
++	echo $CC $CPPFLAGS $CFLAGS conftest.c atomic_gcc4.c -o conftest >>config.log
++	if ! $CC $CPPFLAGS $CFLAGS conftest.c atomic_gcc4.c -o conftest >>config.log 2>&1; then
+ 		# no; try amd64 asm
+ 		ATOMIC_SRC="atomic_amd64_gcc.c"
+-		echo "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_amd64_gcc.c -o conftest >>config.log
+-		if ! "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_amd64_gcc.c -o conftest >>config.log 2>&1; then
++		echo $CC $CPPFLAGS $CFLAGS conftest.c atomic_amd64_gcc.c -o conftest >>config.log
++		if ! $CC $CPPFLAGS $CFLAGS conftest.c atomic_amd64_gcc.c -o conftest >>config.log 2>&1; then
+ 			# no; try i386 asm
+ 			ATOMIC_SRC="atomic_i386_gcc.c"
+-			echo "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_i386_gcc.c -o conftest >>config.log
+-			if ! "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_i386_gcc.c -o conftest >>config.log 2>&1; then
++			echo $CC $CPPFLAGS $CFLAGS conftest.c atomic_i386_gcc.c -o conftest >>config.log
++			if ! $CC $CPPFLAGS $CFLAGS conftest.c atomic_i386_gcc.c -o conftest >>config.log 2>&1; then
+ 				# no; try Solaris builtins
+ 				ATOMIC_SRC="atomic_solaris.c"
+-				echo "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_solaris.c -o conftest >>config.log
+-				if ! "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_solaris.c -o conftest >>config.log 2>&1; then
++				echo $CC $CPPFLAGS $CFLAGS conftest.c atomic_solaris.c -o conftest >>config.log
++				if ! $CC $CPPFLAGS $CFLAGS conftest.c atomic_solaris.c -o conftest >>config.log 2>&1; then
+ 					# no; try pthreads
+ 					ATOMIC_SRC="atomic_pthread.c"
+-					echo "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_pthread.c -o conftest >>config.log
+-					if ! "$CC" $CPPFLAGS $CFLAGS conftest.c atomic_pthread.c -o conftest >>config.log 2>&1; then
++					echo $CC $CPPFLAGS $CFLAGS conftest.c atomic_pthread.c -o conftest >>config.log
++					if ! $CC $CPPFLAGS $CFLAGS conftest.c atomic_pthread.c -o conftest >>config.log 2>&1; then
+ 						echo >&2 "error: could not find any suitable atomics for this system"
+ 						exit 1
+ 					fi
+@@ -368,10 +368,10 @@
+ 	pthread_create(&tid, NULL, f, NULL);
+ }
+ __EOF__
+-echo "$CC" $CPPFLAGS $CFLAGS conftest.c -o conftest >>config.log
+-if ! "$CC" $CPPFLAGS $CFLAGS conftest.c -o conftest >>config.log 2>&1; then
+-	echo "$CC" $CPPFLAGS $CFLAGS conftest.c -o conftest -lpthread >>config.log
+-	if "$CC" $CPPFLAGS $CFLAGS conftest.c -o conftest -lpthread >>config.log 2>&1; then
++echo $CC $CPPFLAGS $CFLAGS conftest.c -o conftest >>config.log
++if ! $CC $CPPFLAGS $CFLAGS conftest.c -o conftest >>config.log 2>&1; then
++	echo $CC $CPPFLAGS $CFLAGS conftest.c -o conftest -lpthread >>config.log
++	if $CC $CPPFLAGS $CFLAGS conftest.c -o conftest -lpthread >>config.log 2>&1; then
+ 		THREAD_LIB=-lpthread
+ 		echo "... yes"
+ 	else
