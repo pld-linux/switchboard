@@ -7,6 +7,8 @@ Group:		Applications
 Source0:	https://confluence.toolserver.org/download/attachments/5931011/%{name}-%{version}.tar.gz?version=1
 # Source0-md5:	4cb514bc04c6913d309cbb330362574d
 Patch0:		%{name}-overquote.patch
+Patch1:		%{name}-boost.patch
+Patch2:		%{name}-make.patch
 URL:		https://confluence.toolserver.org/display/switchboard/Home
 BuildRequires:	boost-call_traits-devel
 BuildRequires:	boost-devel
@@ -28,6 +30,8 @@ overhead of other solutions like mod_suphp.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 # not autoconf configure
@@ -60,11 +64,31 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
 %{__make} install \
+	MANDIR=%{_mandir} \
+	BINDIR=%{_sbindir} \
+	ROOTUSER=%(id -un) \
+	ROOTGROUP=%(id -un) \
+	SB_GROUP=%(id -gn) \
 	DESTDIR=$RPM_BUILD_ROOT
+
+mv $RPM_BUILD_ROOT%{_sysconfdir}/switchboard.conf{.example,}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CREDITS ChangeLog NEWS README THANKS TODO
+%doc README
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/switchboard.conf
+%attr(755,root,root) %{_sbindir}/switchboard
+%attr(755,root,root) %{_sbindir}/switchstats
+
+%dir %{_libdir}/switchboard
+%attr(755,root,root) %{_libdir}/switchboard/switchboard-bin
+%attr(4710,root,root) %{_libdir}/switchboard/swexec
+%attr(4710,root,root) %{_libdir}/switchboard/swkill
+
+%{_datadir}/switchboard/errors/general.html
+%{_mandir}/man1/switchstats.1*
+%{_mandir}/man4/switchboard.conf.4*
+%{_mandir}/man8/switchboard.8*
