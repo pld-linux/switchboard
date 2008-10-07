@@ -1,52 +1,37 @@
---- switchboard-2.0.16/Makefile	2008-10-07 15:02:12.105551569 +0300
-+++ switchboard-2.0.16/Makefile	2008-10-07 15:06:32.960617276 +0300
-@@ -6,6 +6,10 @@
+--- switchboard-2.0.16/Makefile~	2008-10-07 15:06:32.000000000 +0300
++++ switchboard-2.0.16/Makefile	2008-10-07 16:23:03.049668307 +0300
+@@ -6,8 +6,9 @@
  CXXFLAGS	= $(EXTRA_CXXFLAGS)
  LDFLAGS		= $(EXTRA_LDFLAGS)
  LIBS		= -lboost_serialization$(BOOST_TAG) $(EXTRA_LIBS)
+-MANDIR      = $(PREFIX)/man
+ BINDIR      = $(PREFIX)/bin
++LIBDIR      = $(PREFIX)/lib
 +MANDIR      = $(PREFIX)/man
-+BINDIR      = $(PREFIX)/bin
-+ROOTUSER    = root
-+ROOTGROUP   = bin
+ ROOTUSER    = root
+ ROOTGROUP   = bin
  
- OBJS=	\
- 	main.o				\
-@@ -127,23 +131,23 @@
- 	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/lib
- 	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/lib/switchboard
+@@ -128,8 +129,8 @@
+ 
+ install:
+ 	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)
+-	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/lib
+-	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/lib/switchboard
++	$(INSTALL) -d -m 0755 $(DESTDIR)$(LIBDIR)
++	$(INSTALL) -d -m 0755 $(DESTDIR)$(LIBDIR)/switchboard
  	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/share/switchboard/errors
--	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/bin
--	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/man
--	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/man/man1
--	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/man/man4
--	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/man/man8
-+	$(INSTALL) -d -m 0755 $(DESTDIR)$(BINDIR)
-+	$(INSTALL) -d -m 0755 $(DESTDIR)$(MANDIR)
-+	$(INSTALL) -d -m 0755 $(DESTDIR)$(MANDIR)/man1
-+	$(INSTALL) -d -m 0755 $(DESTDIR)$(MANDIR)/man4
-+	$(INSTALL) -d -m 0755 $(DESTDIR)$(MANDIR)/man8
+ 	$(INSTALL) -d -m 0755 $(DESTDIR)$(BINDIR)
+ 	$(INSTALL) -d -m 0755 $(DESTDIR)$(MANDIR)
+@@ -139,9 +140,9 @@
  	$(INSTALL) -d -m 0755 $(DESTDIR)$(CONFDIR)
--	$(INSTALL) -o root -g $(SB_GROUP) -m 0755 switchboard $(DESTDIR)$(PREFIX)/bin
--	$(INSTALL) -o root -g $(SB_GROUP) -m 0755 switchstats $(DESTDIR)$(PREFIX)/bin
--	$(INSTALL) -o root -g $(SB_GROUP) -m 0755 switchboard-bin $(DESTDIR)$(PREFIX)/lib/switchboard
--	$(INSTALL) -o root -g $(SB_GROUP) -m 04710 $(SWEXEC) $(DESTDIR)$(PREFIX)/lib/switchboard
--	$(INSTALL) -o root -g $(SB_GROUP) -m 04710 $(SWKILL) $(DESTDIR)$(PREFIX)/lib/switchboard
--	$(INSTALL) -o root -g bin -m 0644 switchboard.conf.example $(DESTDIR)$(CONFDIR)
--	$(INSTALL) -o root -g bin -m 0644 switchboard.8 $(DESTDIR)$(PREFIX)/man/man8
--	$(INSTALL) -o root -g bin -m 0644 switchstats.1 $(DESTDIR)$(PREFIX)/man/man1
--	$(INSTALL) -o root -g bin -m 0644 switchboard.conf.4 $(DESTDIR)$(PREFIX)/man/man4
-+	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 0755 switchboard $(DESTDIR)$(BINDIR)
-+	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 0755 switchstats $(DESTDIR)$(BINDIR)
-+	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 0755 switchboard-bin $(DESTDIR)$(PREFIX)/lib/switchboard
-+	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 04710 $(SWEXEC) $(DESTDIR)$(PREFIX)/lib/switchboard
-+	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 04710 $(SWKILL) $(DESTDIR)$(PREFIX)/lib/switchboard
-+	$(INSTALL) -o $(ROOTUSER) -g $(ROOTGROUP) -m 0644 switchboard.conf.example $(DESTDIR)$(CONFDIR)
-+	$(INSTALL) -o $(ROOTUSER) -g $(ROOTGROUP) -m 0644 switchboard.8 $(DESTDIR)$(MANDIR)/man8
-+	$(INSTALL) -o $(ROOTUSER) -g $(ROOTGROUP) -m 0644 switchstats.1 $(DESTDIR)$(MANDIR)/man1
-+	$(INSTALL) -o $(ROOTUSER) -g $(ROOTGROUP) -m 0644 switchboard.conf.4 $(DESTDIR)$(MANDIR)/man4
- 	for x in $(ERRORS); do \
--		$(INSTALL) -o root -g bin -m 0644 errors/$$x $(DESTDIR)$(PREFIX)/share/switchboard/errors; \
-+		$(INSTALL) -o $(ROOTUSER) -g $(ROOTGROUP) -m 0644 errors/$$x $(DESTDIR)$(PREFIX)/share/switchboard/errors; \
- 	done
- 
- clean:
+ 	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 0755 switchboard $(DESTDIR)$(BINDIR)
+ 	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 0755 switchstats $(DESTDIR)$(BINDIR)
+-	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 0755 switchboard-bin $(DESTDIR)$(PREFIX)/lib/switchboard
+-	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 04710 $(SWEXEC) $(DESTDIR)$(PREFIX)/lib/switchboard
+-	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 04710 $(SWKILL) $(DESTDIR)$(PREFIX)/lib/switchboard
++	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 0755 switchboard-bin $(DESTDIR)$(LIBDIR)/switchboard
++	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 04710 $(SWEXEC) $(DESTDIR)$(LIBDIR)/switchboard
++	$(INSTALL) -o $(ROOTUSER) -g $(SB_GROUP) -m 04710 $(SWKILL) $(DESTDIR)$(LIBDIR)/switchboard
+ 	$(INSTALL) -o $(ROOTUSER) -g $(ROOTGROUP) -m 0644 switchboard.conf.example $(DESTDIR)$(CONFDIR)
+ 	$(INSTALL) -o $(ROOTUSER) -g $(ROOTGROUP) -m 0644 switchboard.8 $(DESTDIR)$(MANDIR)/man8
+ 	$(INSTALL) -o $(ROOTUSER) -g $(ROOTGROUP) -m 0644 switchstats.1 $(DESTDIR)$(MANDIR)/man1
