@@ -1,15 +1,17 @@
 # TODO
+# - dedicated user
+# - paths, default config, initscript
 # - weird compile messages:
 #   /usr/bin/ld: `.gnu.linkonce.t._ZNK5boost7archive17archive_exception4whatEv' referenced in section `.rodata' of /usr/lib/gcc-lib/i686-pld-linux/3.3.6/../../../libboost_serialization.a(basic_iarchive.o): defined in discarded section `.gnu.linkonce.t._ZNK5boost7archive17archive_exception4whatEv' of /usr/lib/gcc-lib/i686-pld-linux/3.3.6/../../../libboost_serialization.a(basic_iarchive.o)
 #   also http://gcc.gnu.org/bugzilla/show_bug.cgi?id=16625
 Summary:	FastCGI proxy that starts setuid FastCGI processes on demand
 Name:		switchboard
-Version:	2.0.17
+Version:	2.0.18
 Release:	0.1
 License:	BSD
 Group:		Applications
 Source0:	http://www.flyingparchment.org.uk/dump/%{name}-%{version}.tar.gz
-# Source0-md5:	6f32beb6b6942c67a187f8f19155731e
+# Source0-md5:	3376d3fbce213353321e1fbecd3dcd61
 URL:		https://confluence.toolserver.org/display/switchboard/Home
 BuildRequires:	boost-devel
 BuildRequires:	pam-devel
