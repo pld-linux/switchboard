@@ -7,11 +7,12 @@
 Summary:	FastCGI proxy that starts setuid FastCGI processes on demand
 Name:		switchboard
 Version:	2.0.18
-Release:	0.1
+Release:	0.2
 License:	BSD
 Group:		Applications
 Source0:	http://www.flyingparchment.org.uk/dump/%{name}-%{version}.tar.gz
 # Source0-md5:	3376d3fbce213353321e1fbecd3dcd61
+Source1:	%{name}.init
 URL:		https://confluence.toolserver.org/display/switchboard/Home
 BuildRequires:	boost-devel
 BuildRequires:	pam-devel
@@ -48,6 +49,7 @@ CXXFLAGS="%{rpmcxxflags}" \
 ./configure \
 	--prefix=%{_prefix} \
 	--confdir=%{_sysconfdir} \
+	--php-bin=/usr/bin/php.fcgi \
 	--log-exec=/var/log/%{name}/suexec.log \
 	--uid-min=50 \
 	--gid-min=50 \
@@ -58,7 +60,7 @@ CXXFLAGS="%{rpmcxxflags}" \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{/var/run/%{name},/etc/rc.d/init.d}
 
 %{__make} install \
 	MANDIR=%{_mandir} \
@@ -67,6 +69,8 @@ install -d $RPM_BUILD_ROOT
 	ROOTGROUP=%(id -gn) \
 	SB_GROUP=%(id -gn) \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 
 mv $RPM_BUILD_ROOT%{_sysconfdir}/switchboard.conf{.example,}
 
@@ -78,6 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/switchboard.conf
+%attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(755,root,root) %{_sbindir}/switchboard
 %attr(755,root,root) %{_sbindir}/switchstats
 
